@@ -11,7 +11,7 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const handleLogin = () => {
 
-  }
+  } 
 
 
   return (
@@ -33,7 +33,7 @@ export default function Index() {
             Email
           </Text>
           <View className="flex flex-row items-center bg-white ml-4 mr-4 p-2 h-16 rounded-lg">
-            <FontAwesome name="envelope" size={24} color="#800080" />
+            <FontAwesome name="envelope" size={24} color="#800080" className="pl-2" />
             <TextInput
               value={email}
               onChangeText={setEmail}
@@ -51,7 +51,7 @@ export default function Index() {
             Password
           </Text>
           <View className="flex flex-row items-center bg-white ml-4 mr-4 p-2 h-16 rounded-lg">
-            <FontAwesome name="lock" size={24} color="#800080" />
+            <FontAwesome name="lock" size={24} color="#800080" className="pl-2" />
             <View className="flex flex-row items-center flex-1 bg-white ml-4 mr-4 h-16 rounded-lg">
               <TextInput
                 value={password}

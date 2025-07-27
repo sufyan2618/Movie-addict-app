@@ -11,7 +11,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const handleLogin = () => {
+  const handleSignup = () => {
 
   }
 
@@ -30,7 +30,7 @@ export default function Signup() {
             Name
           </Text>
           <View className="flex flex-row items-center bg-white ml-4 mr-4 p-2 h-16 rounded-lg">
-            <FontAwesome name="user" size={24} color="#800080" />
+            <FontAwesome name="user" size={24} color="#800080" className="pl-2" />
             <TextInput
               value={name}
               onChangeText={setname}
@@ -47,7 +47,7 @@ export default function Signup() {
             Email
           </Text>
           <View className="flex flex-row items-center bg-white ml-4 mr-4 p-2 h-16 rounded-lg">
-            <FontAwesome name="envelope" size={24} color="#800080" />
+            <FontAwesome name="envelope" size={24} color="#800080" className="pl-2" />
             <TextInput
               value={email}
               onChangeText={setEmail}
@@ -65,7 +65,7 @@ export default function Signup() {
             Password
           </Text>
           <View className="flex flex-row items-center bg-white ml-4 mr-4 p-2 h-16 rounded-lg">
-            <FontAwesome name="lock" size={24} color="#800080" />
+            <FontAwesome name="lock" size={24} color="#800080" className="pl-2" />
             <View className="flex flex-row items-center flex-1 bg-white ml-4 mr-4 h-16 rounded-lg">
               <TextInput
                 value={password}
@@ -92,7 +92,7 @@ export default function Signup() {
         <View className="flex flex-col mt-6">
           <TouchableOpacity
           disabled={isLoading}
-            onPress={handleLogin}
+            onPress={handleSignup}
             className={`ml-5 mr-5 p-4 rounded-xl items-center ${
               isLoading ? "bg-[#800080]/50" : "bg-[#800080]"
             }`}
@@ -103,8 +103,8 @@ export default function Signup() {
         <View className="flex flex-row justify-center mt-4">
           <Text className="text-gray-800 text-lg">Already have an account?</Text>
           <Link 
-href="/(auth)/Signup" className="text-[#800080] text-lg ml-2 font-bold">
-            Sign Up
+href="/(auth)" className="text-[#800080] text-lg ml-2 font-bold">
+            Login
           </Link>
           </View>
       </View>
