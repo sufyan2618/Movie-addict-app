@@ -1,5 +1,5 @@
-import Movie from "../models/movie.model";
-import cloudinary from "../util/cloudinary";
+import Movie from "../models/movie.model.js";
+import cloudinary from "../util/cloudinary.js";
 
 export const createMovie = async (req, res) => {
     const { title, description, rating } = req.body;
