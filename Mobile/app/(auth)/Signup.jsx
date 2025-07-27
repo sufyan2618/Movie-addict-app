@@ -1,8 +1,9 @@
-import { ActivityIndicator, Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { KeyboardAvoidingView } from "react-native";
+import useAuthStore from "@/store/useAuthStore";
 
 export default function Signup() {
 
@@ -10,10 +11,19 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSignup = () => {
-
-  }
+  const {isSigningUp, Register} = useAuthStore()
+  const handleSignup = async () => {
+    if (!name || !email || !password) {
+        Alert.alert("Missing Information", "Please fill all fields.");
+        return;
+    }
+    const result = await Register(name, email, password);
+    if (result.error) {
+        Alert.alert("Signup Failed", result.error);
+    } else if (result.success) {
+        Alert.alert("Success", "You have registered successfully!");
+    }
+};
 
 
   return (
@@ -91,17 +101,17 @@ export default function Signup() {
 
         <View className="flex flex-col mt-6">
           <TouchableOpacity
-          disabled={isLoading}
+          disabled={isSigningUp}
             onPress={handleSignup}
             className={`ml-5 mr-5 p-4 rounded-xl items-center ${
-              isLoading ? "bg-[#800080]/50" : "bg-[#800080]"
+              isSigningUp ? "bg-[#800080]/50" : "bg-[#800080]"
             }`}
           >
-            {isLoading ? (<ActivityIndicator color="white" size={24} />) : (<Text className="text-white text-lg font-bold">Login</Text>) }
+            {isSigningUp ? (<ActivityIndicator color="white" size={24} />) : (<Text className="text-white text-lg font-bold">Signup</Text>) }
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-center mt-4">
-          <Text className="text-gray-800 text-lg">Already have an account?</Text>
+          <Text className="text-gray-800 text-lg">Don't have an account?</Text>
           <Link 
 href="/(auth)" className="text-[#800080] text-lg ml-2 font-bold">
             Login

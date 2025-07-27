@@ -3,18 +3,17 @@ import bcrypt from "bcrypt";
 import gererateToken from "../util/generateToken.js";
 
 export const Register = async (req, res) => {
-    const { username, email, password } = req.body;
-
-    // Validate input
-    if (!username || !email || !password) {
-        return res.status(400).json({ message: "All fields are required." });
-    }
-    if (password.length < 6) {
-        return res.status(400).json({ message: "Password must be at least 6 characters long." });
-    }
-
+    console.error("Register endpoint hit with body:", req.body);
     try {
-        // Check if user already exists
+        const { username, email, password } = req.body;
+
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+        if (password.length < 6) {
+            return res.status(400).json({ message: "Password must be at least 6 characters long." });
+        }
+    
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists." });
