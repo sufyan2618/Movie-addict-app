@@ -1,7 +1,7 @@
 import { ActivityIndicator, Alert, Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { KeyboardAvoidingView } from "react-native";
 import useAuthStore from "@/store/useAuthStore";
 
@@ -12,6 +12,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const {isSigningUp, Register} = useAuthStore()
+  const router = useRouter();
   const handleSignup = async () => {
     if (!name || !email || !password) {
         Alert.alert("Missing Information", "Please fill all fields.");
@@ -22,6 +23,7 @@ export default function Signup() {
         Alert.alert("Signup Failed", result.error);
     } else if (result.success) {
         Alert.alert("Success", "You have registered successfully!");
+        router.push('/(auth)')
     }
 };
 

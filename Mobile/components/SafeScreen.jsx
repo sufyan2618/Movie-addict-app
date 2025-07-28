@@ -13,7 +13,7 @@ const SafeScreen = ({children}) => {
 const styles = StyleSheet.create( {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#d896ff",
   }
 })
 

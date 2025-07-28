@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import gererateToken from "../util/generateToken.js";
 
 export const Register = async (req, res) => {
-    console.error("Register endpoint hit with body:", req.body);
     try {
         const { username, email, password } = req.body;
 
@@ -47,6 +46,7 @@ export const Register = async (req, res) => {
 }
 
 export const Login = async (req, res) => {
+    console.log("login route reached", req.body)
     try {
         const { email, password } = req.body;
 
@@ -80,14 +80,6 @@ export const Login = async (req, res) => {
         });
     } catch (error) {
         console.error("Login error:", error);
-        res.status(500).json({ message: "Server error." });
-    }
-}
-export const Logout = async (req, res) => {
-    try {
-        res.status(200).json({ message: "Logout successful." });
-    } catch (error) {
-        console.error("Logout error:", error);
         res.status(500).json({ message: "Server error." });
     }
 }

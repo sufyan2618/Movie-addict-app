@@ -1,16 +1,28 @@
-import { ActivityIndicator, Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { KeyboardAvoidingView } from "react-native";
+import useAuthStore from "../../store/useAuthStore";
 export default function Index() {
 
   const [email, setEmail] = useState("");
+  const router = useRouter()
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const handleLogin = () => {
-
+  const {isLoggingIn, Login} = useAuthStore()
+  const handleLogin = async () => {
+    if(!email || !password){
+      Alert.alert("Please fill in All fields");
+    }
+    const response = await Login(email, password)
+    if(response.error){
+      Alert.alert("Error:", response.error)
+    }
+    else if(response.success) {
+      Alert.alert("Logged In Successfully")
+      router.push('/')
+    }
   } 
 
 
@@ -77,13 +89,13 @@ export default function Index() {
 
         <View className="flex flex-col mt-6">
           <TouchableOpacity
-          disabled={isLoading}
+          disabled={isLoggingIn}
             onPress={handleLogin}
             className={`ml-5 mr-5 p-4 rounded-xl items-center ${
-              isLoading ? "bg-[#800080]/50" : "bg-[#800080]"
+              isLoggingIn ? "bg-[#800080]/50" : "bg-[#800080]"
             }`}
           >
-            {isLoading ? (<ActivityIndicator color="white" size={24} />) : (<Text className="text-white text-lg font-bold">Login</Text>) }
+            {isLoggingIn ? (<ActivityIndicator color="white" size={24} />) : (<Text className="text-white text-lg font-bold">Login</Text>) }
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-center mt-4">
