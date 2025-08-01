@@ -7,28 +7,18 @@ const TabsLayout = () => {
     const insets = useSafeAreaInsets()
     return (
         <Tabs
-        
-        screenOptions={{
-            tabBarActiveTintColor: "#800080",
-            tabBarInactiveTintColor: "black",
-            tabBarStyle: {
-                backgroundColor: "#d896ff",
-                height: insets.bottom + 60,
-                borderTopWidth: 1,
-                borderColor: "#800080",
-            }
-        }}
+
+            screenOptions={{
+                tabBarActiveTintColor: "#800080",
+                tabBarInactiveTintColor: "#535354",
+                tabBarStyle: {
+                    backgroundColor: "#e1c9f0",
+                    height: insets.bottom + 60,
+                    borderTopWidth: 1,
+                }
+            }}
         >
-            <Tabs.Screen
-                name="create"
-                options={{
-                    title: 'Create',
-                    headerShown: false,
-                    tabBarIcon: ({ color }) => (
-                        <FontAwesome name="plus-circle" size={24} color={color} />
-                    ),
-                }}
-            />
+
             <Tabs.Screen
                 name="index"
                 options={{
@@ -36,6 +26,17 @@ const TabsLayout = () => {
                     headerShown: false,
                     tabBarIcon: ({ color }) => (
                         <FontAwesome name="home" size={24} color={color} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="create"
+                options={{
+                    title: 'Create',
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome name="plus-circle" size={24} color={color} />
                     ),
                 }}
             />

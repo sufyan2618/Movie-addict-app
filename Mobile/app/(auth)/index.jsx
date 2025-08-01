@@ -31,13 +31,13 @@ export default function Index() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       className="flex-1"
     >
-    <View className="bg-[#d896ff] w-full h-full flex justify-center">
+    <View className="bg-[#e1c9f0] w-full h-full flex justify-center">
       <Image
         source={require("../../assets/images/i.png")}
         className="w-full h-64 mt-6"
         resizeMode="contain"
       />
-      <View className="flex bg-[#efbbff] m-7 pl-2 pr-2 h-auto pb-10 mb-8 rounded-xl">
+      <View className="flex bg-[#dfd5e6] m-7 pl-2 pr-2 h-auto pb-10 mb-8 rounded-xl">
         <Text className="text-2xl text-[#800080] text-center mt-10 font-bold">Movies Addict</Text>
         <Text className="text-lg text-gray-800 text-center mt-2">Discover the latest movies and TV shows</Text>
         <View className="flex flex-col mt-2">

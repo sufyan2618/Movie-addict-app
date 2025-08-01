@@ -2,30 +2,29 @@ import Movie from "../models/movie.model.js";
 import cloudinary from "../util/cloudinary.js";
 
 export const createMovie = async (req, res) => {
-    console.log( "req.body", req.body);
-    console.log("req.file", req.file);
-    const { title, description, rating } = req.body;
-    const imageFile = req.file;
-    const userId = req.user._id; 
-
-    if (!title || !description  || !rating) {
-        return res.status(400).json({ message: "All fields are required." });
-    }
-    if (!imageFile){
-        return res.status(400).json({ message: "Image file is required." });
-    }
-    if (rating < 1 || rating > 5) {
-        return res.status(400).json({ message: "Rating must be between 1 and 5." });
-    }
-    const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString("base64")}`;
-    const response = await cloudinary.uploader.upload(base64Image, {
-        folder: "movie_images",
-        resource_type: "image",
-    }
-    );
-    const image = response.secure_url;
 
     try {
+        const { title, description, rating } = req.body;
+        const imageFile = req.file;
+        const userId = req.user._id; 
+    
+        if (!title || !description  || !rating) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+        if (!imageFile){
+            return res.status(400).json({ message: "Image file is required." });
+        }
+        if (rating < 1 || rating > 5) {
+            return res.status(400).json({ message: "Rating must be between 1 and 5." });
+        }
+        const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString("base64")}`;
+        const response = await cloudinary.uploader.upload(base64Image, {
+            folder: "movie_images",
+            resource_type: "image",
+        }
+        );
+        const image = response.secure_url;
+    
         const newMovie = new Movie({
             title,
             description,

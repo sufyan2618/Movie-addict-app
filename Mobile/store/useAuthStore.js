@@ -62,7 +62,6 @@ const useAuthStore = create((set, get) => ({
                 set({user: null, token: null});
             }
             set({user, token});
-            console.log(token)
         } catch (error) {
             console.error("Error Logging out");
         }

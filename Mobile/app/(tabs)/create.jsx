@@ -1,11 +1,13 @@
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity,  Alert, Image } from 'react-native'
 import {useState} from 'react'
 import { FontAwesome } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker';
 import useMovieStore from '../../store/useMovieStore';
 import useAuthStore from '../../store/useAuthStore';
+import { useRouter } from 'expo-router';
 
 const create = () => {
+  const router = useRouter();
 
   const [title, settitle] = useState('');
   const [rating, setrating] = useState(1);
@@ -24,7 +26,8 @@ const create = () => {
           key={i}
           onPress={() => setrating(i)}
         >
-          <FontAwesome name="star" size={24} color={i<=rating ? "#800080" : "#d3d3d3"} />
+          <FontAwesome name={i <= rating ? "star" : "star-o"}
+          size={24} color={i<=rating ? "#800080" : "black"} />
         </TouchableOpacity>
       );
     }
@@ -47,9 +50,8 @@ const create = () => {
       // launch image library
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: "images",
-        allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.5, // lower quality for smaller base64
+        quality: 0.5, 
       });
 
       if (!result.canceled) {
@@ -71,6 +73,7 @@ const create = () => {
     }
     else if (response.success) {
       Alert.alert("Success", "Your movie recommendation has been added!");
+      router.push('/(tabs)/');
       settitle('');
       setrating(1);
       setPicture(null);
@@ -84,24 +87,24 @@ const create = () => {
     behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
     className="flex-1"
     >
-      <ScrollView className="bg-[#d896ff] flex-1">
-        <View className="flex-1 justify-center bg-white w-auto h-auto m-6 pt-6 rounded-xl">
+      <ScrollView className="bg-[#e1c9f0] flex-1">
+        <View className="flex-1 justify-center bg-[#dfd5e6] w-auto h-auto m-6 pt-6 pl-4 rounded-xl">
           <Text className="text-center text-2xl font-bold" >
             Add Movie recommendation
           </Text>
           <Text className="mt-2 text-center"> 
             Share you favorite Movies with the world!
           </Text>
-          <View className="mt-6 p-5 ">
-            <Text className="font-bold">
+          <View className="mt-6 pb-3">
+            <Text className="font-bold pb-3">
               Title
             </Text>
-            <View className="flex flex-row items-center bg-white mr-4 p-2 h-16 rounded-lg">
+            <View className="flex flex-row items-center bg-white mr-4 p-4 h-16 rounded-lg">
             <FontAwesome name="user" size={24} color="#800080"  />
             <TextInput
               value={title}
               onChangeText={settitle}
-              className="bg-white ml-4 p-2 pr-10 h-16 w-auto rounded-lg border-black border-2"
+              className="bg-white ml-4 p-2 pr-10 h-16 w-auto rounded-lg "
               placeholder="Enter title of Movie"
               keyboardType="default"
               autoCapitalize="words"
@@ -109,21 +112,23 @@ const create = () => {
             />
           </View>
           </View>
-          <View className="p-5">
-            <Text>
+          <View className="pb-2 mt-4">
+            <Text className="font-bold pb-3">
               Rating
             </Text>
-            <View className="flex flex-row items-center justify-between bg-white mr-4 p-2 h-16 rounded-lg">
+            <View className="flex flex-row items-center justify-evenly bg-white mr-4 p-3 h-16 rounded-lg">
               {ratingFunction()}
               </View>
           </View>
-          <View className="p-5">
-            <Text className="font-bold">
+          <View className="pb-2">
+            <Text className="font-bold pb-4">
               Picture
             </Text>
-            <TouchableOpacity onPress={selectImage} className="flex flex-col items-center justify-center bg-white h-[200px] w-200 rounded-lg pb-10">
+            <TouchableOpacity onPress={selectImage} className="flex flex-col items-center justify-center bg-white h-[200px]  rounded-lg pb-10">
               { picture ? (
-                <Image source={{ uri: picture }} className="h-full w-full rounded-lg " />
+                <Image
+                style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+                 source={{uri: picture}} className="h-full w-full rounded-lg " />
               ) : (
                 <View className="flex flex-col items-center justify-center bg-white ">
                   <FontAwesome name="picture-o" size={24} color="#800080" />
@@ -132,8 +137,8 @@ const create = () => {
               ) }
             </TouchableOpacity>
           </View>
-          <View className="p-5">
-            <Text className="font-bold p-5">
+          <View className="pb-2 mt-4">
+            <Text className="font-bold pb-3">
               Caption
             </Text>
             <View className="flex flex-row items-center bg-white mr-4 p-2 h-16 rounded-lg">

@@ -3,7 +3,8 @@ import { API_URL } from "../constants/api";
 const useMovieStore = create((set) => ({
 
     isUploading: false,
-
+    isFetchingMovies: false,
+    movies: [],
     UploadMovie: async (title, rating, picture, caption, token) => {
         set({ isUploading: true });
         try {
@@ -47,7 +48,33 @@ const useMovieStore = create((set) => ({
         } finally {
             set({ isUploading: false });
         }
+    },
+    FetchMovies : async (page, token) => {
+        set({ isFetchingMovies: true });
+        try {
+            const response = await fetch(`${API_URL}/movies/get-movies?page=${page}&limit=2`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch movies');
+            }
+
+            const data = await response.json();
+            set({ movies: data.movies });
+            return { success: true, movies: data.movies };
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+            return { error: error.message };
+        } finally {
+            set({ isFetchingMovies: false });
+        }
     }
+
 
 })
 );
