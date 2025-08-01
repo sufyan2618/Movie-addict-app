@@ -2,11 +2,13 @@ import Movie from "../models/movie.model.js";
 import cloudinary from "../util/cloudinary.js";
 
 export const createMovie = async (req, res) => {
+    console.log( "req.body", req.body);
+    console.log("req.file", req.file);
     const { title, description, rating } = req.body;
-    const imageFile = req.file.imageFile;
-    const userId = req.user._id; // Assuming user is authenticated and user ID is available
+    const imageFile = req.file;
+    const userId = req.user._id; 
 
-    if (!title || !description || !image || !rating) {
+    if (!title || !description  || !rating) {
         return res.status(400).json({ message: "All fields are required." });
     }
     if (!imageFile){

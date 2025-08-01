@@ -1,5 +1,6 @@
 import {create} from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '../constants/api';
 const useAuthStore = create((set, get) => ({
     user: null,
     token: null,
@@ -11,7 +12,7 @@ const useAuthStore = create((set, get) => ({
     Register: async (username, email, password) => {
         set({ isSigningUp: true });
         try {
-            const response = await fetch(`http://10.0.2.2:7000/api/auth/register`, {
+            const response = await fetch( `${API_URL}/auth/register`  , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,6 +62,7 @@ const useAuthStore = create((set, get) => ({
                 set({user: null, token: null});
             }
             set({user, token});
+            console.log(token)
         } catch (error) {
             console.error("Error Logging out");
         }
@@ -71,7 +73,7 @@ const useAuthStore = create((set, get) => ({
     Login: async (email, password) => {
         set({isLoggingIn: true})
         try {
-            const response = await fetch(`http://10.0.2.2:7000/api/auth/login`, {
+            const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
