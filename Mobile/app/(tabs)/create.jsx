@@ -124,10 +124,10 @@ const create = () => {
             <Text className="font-bold pb-4">
               Picture
             </Text>
-            <TouchableOpacity onPress={selectImage} className="flex flex-col items-center justify-center bg-white h-[200px]  rounded-lg pb-10">
+            <TouchableOpacity onPress={selectImage} className="flex flex-col items-center justify-center bg-white h-[200px]  rounded-lg">
               { picture ? (
                 <Image
-                style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+                style={{ width: '100%', height: '100%', resizeMode: 'cover'  }}
                  source={{uri: picture}} className="h-full w-full rounded-lg " />
               ) : (
                 <View className="flex flex-col items-center justify-center bg-white ">
@@ -148,6 +148,7 @@ const create = () => {
                 onChangeText={setCaption}
                 className="bg-white ml-4 mr-4 p-2 h-16 rounded-lg"
                 placeholder="Enter caption for the movie"
+                multiline={true}
                 keyboardType="default"
                 autoCapitalize="sentences"
                 autoCorrect={false}

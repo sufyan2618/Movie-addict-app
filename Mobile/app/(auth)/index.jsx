@@ -21,7 +21,7 @@ export default function Index() {
     }
     else if(response.success) {
       Alert.alert("Logged In Successfully")
-      router.push('/')
+      router.push('/(tabs)')
     }
   } 
 

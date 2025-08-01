@@ -1,42 +1,36 @@
 import { SplashScreen, Stack, useRouter, useSegments, useRootNavigationState } from "expo-router";
 import '../global.css';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import SafeScreen from "@/components/SafeScreen";
+import SafeScreen from "@/components/SafeScreen"; // Restoring your SafeScreen component
 import { StatusBar } from "react-native";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import useAuthStore from "../store/useAuthStore";
 
-export default function RootLayout() {
-  SplashScreen.preventAutoHideAsync();
-  const segments = useSegments();
-  const { CheckAuth, isCheckingAuth, token, user } = useAuthStore();
-  const router = useRouter();
-  const navigationState = useRootNavigationState();
 
-  useEffect(() => {
-    CheckAuth();
+export default function RootLayout() {
+
+  const {CheckAuth, user, token} = useAuthStore()
+  const segments = useSegments()
+  const router = useRouter()
+
+  useEffect(()=> {
+    CheckAuth()
   }, []);
 
-  useEffect(() => {
-    if (isCheckingAuth || !navigationState?.key) {
-      return;
+  useEffect(() =>{
+    const isLoggedIn = user && token
+    const isTabsRoute = segments[0] === '(tabs)'
+
+    if(!isLoggedIn && isTabsRoute){
+      router.replace('/(auth)')
+    }
+    else if( isLoggedIn && !isTabsRoute){
+      router.replace('/(tabs)');
     }
 
-    const isLoggedIn = !!user && !!token;
-    const inAuthGroup = segments[0] === "(auth)";
+  }, [segments, user, token])
 
-    if (!isLoggedIn && !inAuthGroup) {
-      router.replace("/(auth)/");
-    } else if (isLoggedIn && inAuthGroup) {
-      router.replace("/(tabs)");
-    }
-    SplashScreen.hideAsync();
 
-  }, [isCheckingAuth, user, token, segments, navigationState]);
-
-  if (isCheckingAuth || !navigationState?.key) {
-    return null;
-  }
 
   return (
     <SafeAreaProvider>

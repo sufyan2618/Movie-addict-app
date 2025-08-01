@@ -1,46 +1,75 @@
-import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl } from 'react-native'
 import useAuthStore from '../../store/useAuthStore'
 import { useEffect, useState } from 'react'
 import useMovieStore from '../../store/useMovieStore';
+import { FontAwesome } from '@expo/vector-icons';
+import { formatePostDate } from '../../util/formatDate';
 
 const Home = () => {
 
   const [page, setPage] = useState(1);
-  const {token, Logout} = useAuthStore();
-  console.log("Token:", token);
+  const [hasMore,setHasMore] = useState(true)
+  const {token} = useAuthStore();
   const {FetchMovies, isFetchingMovies, movies} = useMovieStore()
 
+
   useEffect(() => {
-    FetchMovies(page, token);
+    const response = FetchMovies(page, token);
+    setHasMore(response.totalPages > page);
   }, []);
+  console.log(hasMore)
+
+  const renderStars = (rating) =>{
+    const stars = []
+    for (let i = 1; i <=5; i++) {
+      stars.push(
+        <View>
+          <FontAwesome name={i <= rating ? "star" : "star-o"}
+          size={24} color={i<=rating ? "#800080" : "black"} 
+          className="p-1"
+          />
+        </View>
+      )
+    }
+    return stars;
+  }
 
   const renderMovies = ({ item }) => (
-    <View className="m-4 p-8 h-96 w-80 rounded-lg shadow-md bg-white"> 
-    <TouchableOpacity
-    onPress={Logout}
-    >
-      <Text className="text-white text-center">
-        Logout
-      </Text>
-    </TouchableOpacity>
+    <View className="m-4 ml-0 p-5 h-auto w-full rounded-2xl shadow-md bg-white"> 
+
       <View className="flex flex-row items-center mb-4">
         <Image
-        source='https://api.dicebear.com/7.x/avataaars/png?seed=sufyan'
-        
-          className="w-20 h-20 rounded-lg bg-red-400"
+        source={{uri: item.user.profilePicture}}   
+          className="w-16 h-16 rounded-full bg-red-400"
 
         />
-        <Text className="text-lg text-center font-bold text-gray-800 ml-4">
+        <Text className="text-lg text-center font-bold text-[#800080] ml-4">
           {item.user.username}
         </Text>
       </View>
+      <Image
+      source={{uri: item.image}}
+      className="w-[300px] h-[300px] rounded-xl "
+      />
+      <Text className="font-bold text-[#800080] pt-3 pl-2 text-2xl">
+        {item.title}
+      </Text>
+      <View className="flex flex-row items-center justify-start bg-white mr-4  h-16 rounded-lg">
+              {renderStars(item.rating)}
+      </View>
+      <Text className=" pl-3 text-lg">
+        {item.description}
+      </Text>
+      <Text className="text-md ml-3">
+        {formatePostDate(item.createdAt)}
+      </Text>
     </View>
   );
   
 
 
   return (
-    <View className="flex-1 items-center justify-center bg-[#e1c9f0]">
+    <View className="flex-auto items-center justify-center bg-[#e1c9f0]">
       <FlatList
         data={movies}
         keyExtractor={(item) => item._id}
@@ -51,7 +80,13 @@ const Home = () => {
         //     FetchMovies(page + 1, token);
         //   }
         // }}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.4}
+        refreshControl={
+          <RefreshControl
+          refreshing={isFetchingMovies}
+          onRefresh={() => FetchMovies(1, token)}
+           />
+        }
         ListFooterComponent={isFetchingMovies ? <Text>Loading...</Text> : null}
       />
     </View>

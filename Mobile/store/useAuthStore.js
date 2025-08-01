@@ -1,6 +1,8 @@
 import {create} from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '../constants/api';
+import { jwtDecode } from "jwt-decode";
+
 const useAuthStore = create((set, get) => ({
     user: null,
     token: null,
@@ -58,10 +60,20 @@ const useAuthStore = create((set, get) => ({
             const tokenString = await AsyncStorage.getItem("token", token);
             const user = userString ? JSON.parse(userString) : null;
             const token = tokenString ? JSON.parse(tokenString) : null
+
             if(!user || !token) {
                 set({user: null, token: null});
             }
-            set({user, token});
+
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000
+            if(decodedToken.exp < currentTime){
+                await AsyncStorage.removeItem("token");
+                await AsyncStorage.removeItem("user")
+                set({user: null, token: null})
+            } else{
+                set({user, token});
+            }
         } catch (error) {
             console.error("Error Logging out");
         }

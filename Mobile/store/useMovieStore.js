@@ -65,8 +65,17 @@ const useMovieStore = create((set) => ({
             }
 
             const data = await response.json();
-            set({ movies: data.movies });
-            return { success: true, movies: data.movies };
+
+            const uniqueMovies =
+            page === 1
+          ? data.movies
+          : Array.from(new Set([...movies, ...data.movies].map((movies) => movies._id))).map((id) =>
+              [...movies, ...data.movies].find((movies) => movies._id === id)
+            );
+
+
+            set({ movies: uniqueMovies });
+            return { success: true, movies: uniqueMovies, totalPages: data.totalPages };
         } catch (error) {
             console.error('Error fetching movies:', error);
             return { error: error.message };
