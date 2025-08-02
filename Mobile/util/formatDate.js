@@ -7,4 +7,10 @@ export const formatePostDate = (dateString) => {
     return `${month} ${day}, ${year}`
 }
 
-formatePostDate();
+export const formatProfileDate = (dateString) => {
+    const newDate = new Date(dateString)
+    const month = newDate.toLocaleString("default", {month: 'numeric'})
+    const day = newDate.getDay();
+    const year = newDate.getFullYear();
+    return `${month}/${day}/${year}`
+}

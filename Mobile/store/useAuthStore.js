@@ -108,6 +108,25 @@ const useAuthStore = create((set, get) => ({
         finally{
             set({isLoggingIn: false})
         }
+    },
+    GetMovies: async (token) => {
+        try {
+            const response = await fetch(`${API_URL}/movies/get-movies-by-user`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch books');
+            }
+            const data = await response.json();
+            return { success: true, books: data.books };
+        } catch (error) {
+            console.error('Error fetching books:', error);
+            return { error: error.message };
+        }
     }
 }));
 export default useAuthStore;

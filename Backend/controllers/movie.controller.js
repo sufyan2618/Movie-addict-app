@@ -66,7 +66,7 @@ export const getMovies = async (req, res) => {
 }
 
 export const getMoviesbyUser = async (req, res) => {
-    const userId = req.user._id; // Assuming user is authenticated and user ID is available
+    const userId = req.user._id; 
 
     try {
         const movies = await Movie.find({ user: userId })
@@ -85,15 +85,12 @@ export const getMoviesbyUser = async (req, res) => {
 
 export const deleteMovie = async (req, res) => {
     const movieId = req.params.id;
-    const userId = req.user._id; // Assuming user is authenticated and user ID is available
+    const userId = req.user._id; 
 
     try {
         const movie = await Movie.findById(movieId);
         if (!movie) {
             return res.status(404).json({ message: "Movie not found." });
-        }
-        if (movie.user.toString() !== userId.toString()) {
-            return res.status(403).json({ message: "You are not authorized to delete this movie." });
         }
         if(movie.image) {
             const publicId = movie.image.split("/").pop().split(".")[0]; // Extract public ID from URL

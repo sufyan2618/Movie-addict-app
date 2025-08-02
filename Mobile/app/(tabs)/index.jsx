@@ -1,4 +1,3 @@
-// Home.jsx - CORRECTED
 import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl, ActivityIndicator } from 'react-native';
 import useAuthStore from '../../store/useAuthStore';
 import { useEffect, useState, useCallback } from 'react';

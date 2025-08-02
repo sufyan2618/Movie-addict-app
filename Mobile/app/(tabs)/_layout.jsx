@@ -18,6 +18,7 @@ const TabsLayout = () => {
                 }
             }}
         >
+    
 
             <Tabs.Screen
                 name="index"
@@ -40,8 +41,7 @@ const TabsLayout = () => {
                     ),
                 }}
             />
-
-            <Tabs.Screen
+                    <Tabs.Screen
                 name="profile"
                 options={{
                     title: 'Profile',
@@ -51,6 +51,7 @@ const TabsLayout = () => {
                     ),
                 }}
             />
+
         </Tabs>
     )
 }

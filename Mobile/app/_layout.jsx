@@ -9,7 +9,7 @@ import useAuthStore from "../store/useAuthStore";
 
 export default function RootLayout() {
 
-  const {CheckAuth, user, token} = useAuthStore()
+  const {CheckAuth, user, token, isCheckingAuth} = useAuthStore()
   const segments = useSegments()
   const router = useRouter()
 
@@ -20,7 +20,7 @@ export default function RootLayout() {
   useEffect(() =>{
     const isLoggedIn = user && token
     const isTabsRoute = segments[0] === '(tabs)'
-
+    
     if(!isLoggedIn && isTabsRoute){
       router.replace('/(auth)')
     }
