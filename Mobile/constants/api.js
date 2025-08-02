@@ -1,4 +1,4 @@
-export const API_URL = "http://10.0.2.2:7000/api"
+export const API_URL = "https://movie-app-backend-2icx.onrender.com/api"
 
 export const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
