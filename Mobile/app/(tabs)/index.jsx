@@ -66,13 +66,13 @@ const Home = () => {
                     source={{ uri: item.user.profilePicture }}
                     className="w-16 h-16 rounded-full bg-red-400"
                 />
-                <Text className="text-lg text-center font-bold text-[#800080] ml-4">
+                <Text className="text-xl text-center font-bold text-[#800080] ml-4">
                     {item.user.username}
                 </Text>
             </View>
             <Image
                 source={{ uri: item.image }}
-                className="w-full h-[300px] rounded-xl " 
+                className="w-full h-[200px] rounded-xl " 
                 resizeMode="cover"
             />
             <Text className="font-bold text-[#800080] pt-3 pl-2 text-2xl">

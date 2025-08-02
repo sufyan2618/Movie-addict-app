@@ -75,7 +75,7 @@ const useMovieStore = create((set, get) => ({
             }
             return { success: true, movies: data.movies, totalPages: data.totalPages };
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            // console.error('Error fetching movies:', error);
             return { error: error.message };
         } finally {
             set({ isFetchingMovies: false });
