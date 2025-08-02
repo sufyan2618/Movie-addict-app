@@ -49,7 +49,7 @@ export default function Index() {
             <TextInput
               value={email}
               onChangeText={setEmail}
-              className="bg-white ml-4 mr-4 p-2 h-16 rounded-lg  "
+              className="flex-1 p-2"
               placeholder="Enter your name"
               keyboardType="email-address"
 

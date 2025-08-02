@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { API_URL } from "../constants/api";
-const useMovieStore = create((set) => ({
+const useMovieStore = create((set, get) => ({
 
     isUploading: false,
     isFetchingMovies: false,
@@ -66,16 +66,14 @@ const useMovieStore = create((set) => ({
 
             const data = await response.json();
 
-            const uniqueMovies =
-            page === 1
-          ? data.movies
-          : Array.from(new Set([...movies, ...data.movies].map((movies) => movies._id))).map((id) =>
-              [...movies, ...data.movies].find((movies) => movies._id === id)
-            );
-
-
-            set({ movies: uniqueMovies });
-            return { success: true, movies: uniqueMovies, totalPages: data.totalPages };
+            if(page === 1) {
+                set({movies: data.movies});
+            } else{
+                set((state) => ({
+                    movies: [...state.movies, ...data.movies],
+                }));
+            }
+            return { success: true, movies: data.movies, totalPages: data.totalPages };
         } catch (error) {
             console.error('Error fetching movies:', error);
             return { error: error.message };

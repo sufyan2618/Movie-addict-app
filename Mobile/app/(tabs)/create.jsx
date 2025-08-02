@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity,  Alert, Image } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity,  Alert, Image, ActivityIndicator } from 'react-native'
 import {useState} from 'react'
 import { FontAwesome } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker';
@@ -159,9 +159,12 @@ const create = () => {
           disabled={isUploading}
           className={`bg-[#800080] p-4 rounded-lg m-5 ${isUploading ? 'opacity-50' : ''}` }
           onPress={handleSubmit}>
-            <Text className="text-white text-center font-bold text-lg">
+            { isUploading ? (
+              <ActivityIndicator color="white" size={24} className="text-center"/>
+            ) : ( <Text className="text-white text-center font-bold text-lg">
               Submit
-            </Text>
+            </Text>) }
+           
           </TouchableOpacity>
         </View>
       </ScrollView>

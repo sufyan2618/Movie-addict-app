@@ -71,6 +71,7 @@ const useAuthStore = create((set, get) => ({
                 await AsyncStorage.removeItem("token");
                 await AsyncStorage.removeItem("user")
                 set({user: null, token: null})
+                console.log("Token is expired")
             } else{
                 set({user, token});
             }

@@ -34,7 +34,7 @@ export default function Signup() {
       className="flex-1"
     >
     <View className="bg-[#e1c9f0] w-full h-full flex justify-center">
-      <View className="flex bg-[#dfd5e6] m-7 pl-2 pr-2 h-auto pb-10 mb-8 rounded-xl">
+      <View className="flex bg-[#edd9fa] m-7 pl-2 pr-2 h-auto pb-10 mb-8 rounded-xl">
         <Text className="text-2xl text-[#800080] text-center mt-10 font-bold">Movies Addict</Text>
         <Text className="text-lg text-gray-800 text-center mt-2">Discover the latest movies and TV shows</Text>
         <View className="flex flex-col mt-2">
@@ -46,7 +46,7 @@ export default function Signup() {
             <TextInput
               value={name}
               onChangeText={setname}
-              className="bg-white ml-4 mr-4 p-2 h-16 rounded-lg  "
+              className="flex-1 p-2"
               placeholder="Enter your name"
               keyboardType="default"
               autoCapitalize="words"
@@ -63,7 +63,7 @@ export default function Signup() {
             <TextInput
               value={email}
               onChangeText={setEmail}
-              className="bg-white ml-4 mr-4 p-2 h-16 rounded-lg  "
+              className="flex-1 p-2"
               placeholder="Enter your name"
               keyboardType="email-address"
 
