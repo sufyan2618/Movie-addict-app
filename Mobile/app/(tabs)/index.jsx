@@ -8,7 +8,7 @@ import { formatePostDate } from '../../util/formatDate';
 const Home = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const { token, Logout } = useAuthStore();
+    const { token, Logout, isCheckingAuth } = useAuthStore();
     const { FetchMovies, isFetchingMovies, movies } = useMovieStore();
 
     useEffect(() => {
@@ -95,6 +95,10 @@ const Home = () => {
         return <ActivityIndicator size="large" color="#800080" style={{ marginVertical: 20 }} />;
     };
 
+    if(isCheckingAuth){
+        return <ActivityIndicator size={'large'} />
+    }
+
     return (
         <View className="flex-1 bg-[#e1c9f0]">
             <FlatList
@@ -110,19 +114,14 @@ const Home = () => {
                     />
                 }
                 ListHeaderComponent={
-                    <View className="flex flex-row items-center justify-between w-full p-4">
+                    <View className="flex  items-center justify-center w-full p-4">
                          <Text className="text-3xl text-center font-bold text-[#800080]">
-                            Movie List
+                            Movie Addicts
                         </Text>
-                        <TouchableOpacity
-                            onPress={Logout}
-                            className="flex flex-row items-center justify-center bg-white p-2 rounded-lg shadow-md"
-                        >
-                            <Text className="text-lg text-[#800080] font-bold">
-                                Logout
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                        <Text className="text-lg text-gray-800 text-center mt-1">
+                            Discover the latest movies and TV shows
+                        </Text>
+                      </View>  
                 }
                 ListFooterComponent={renderFooter}
             />

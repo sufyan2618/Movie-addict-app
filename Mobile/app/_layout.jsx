@@ -3,11 +3,12 @@ import '../global.css';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeScreen from "@/components/SafeScreen"; // Restoring your SafeScreen component
 import { StatusBar } from "react-native";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import useAuthStore from "../store/useAuthStore";
 
 
 export default function RootLayout() {
+  SplashScreen.preventAutoHideAsync()
 
   const {CheckAuth, user, token, isCheckingAuth} = useAuthStore()
   const segments = useSegments()
@@ -17,7 +18,7 @@ export default function RootLayout() {
     CheckAuth()
   }, []);
 
-  useEffect(() =>{
+  setTimeout(() => {
     const isLoggedIn = user && token
     const isTabsRoute = segments[0] === '(tabs)'
     
@@ -27,8 +28,11 @@ export default function RootLayout() {
     else if( isLoggedIn && !isTabsRoute){
       router.replace('/(tabs)');
     }
+    
+  }, 2000);
 
-  }, [segments, user, token])
+     
+
 
 
 

@@ -104,7 +104,7 @@ const create = () => {
             <TextInput
               value={title}
               onChangeText={settitle}
-              className="bg-white ml-4 p-2 pr-10 h-16 w-auto rounded-lg "
+              className="flex-1 p-2"
               placeholder="Enter title of Movie"
               keyboardType="default"
               autoCapitalize="words"
@@ -146,7 +146,7 @@ const create = () => {
               <TextInput
                 value={caption}
                 onChangeText={setCaption}
-                className="bg-white ml-4 mr-4 p-2 h-16 rounded-lg"
+                className="p-2 flex-1"
                 placeholder="Enter caption for the movie"
                 multiline={true}
                 keyboardType="default"

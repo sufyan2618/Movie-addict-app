@@ -18,7 +18,7 @@ if(!user) {
             className="w-16 h-16 rounded-full bg-red-400"
         />
         <View className="ml-4 flex flex-col">
-            <Text className="text-lg font-bold text-[#800080]">{user.username}</Text>
+            <Text className="text-xl font-bold text-[#800080]">{user.username}</Text>
             <Text className="text-gray-600">{user.email}</Text>
             <Text className="text-gray-600 pt-1">{`Member Since ${date}`}</Text>
         </View>

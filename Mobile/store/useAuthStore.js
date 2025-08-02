@@ -10,6 +10,8 @@ const useAuthStore = create((set, get) => ({
     isCheckingAuth: false,
     isLoggingIn: false,
     isLoggingOut: false,
+    isFetchingMovies: false,
+    isDeletingMovie: false,
 
     Register: async (username, email, password) => {
         set({ isSigningUp: true });
@@ -110,6 +112,7 @@ const useAuthStore = create((set, get) => ({
         }
     },
     GetMovies: async (token) => {
+        set({isFetchingMovies: true})
         try {
             const response = await fetch(`${API_URL}/movies/get-movies-by-user`, {
                 method: 'GET',
@@ -122,10 +125,35 @@ const useAuthStore = create((set, get) => ({
                 throw new Error(errorData.message || 'Failed to fetch books');
             }
             const data = await response.json();
-            return { success: true, books: data.books };
+            return { success: true, movies: data };
         } catch (error) {
             console.error('Error fetching books:', error);
             return { error: error.message };
+        }
+        finally{
+            set({isFetchingMovies: false})
+        }
+    },
+    DeleteMovie : async (id) => {
+        set({isDeletingMovie: true});
+        try {
+            const { token } = get();
+            const response = await fetch(`${API_URL}/movies/delete-movie/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to delete movie');
+            }
+            return { success: true };
+        } catch (error) {
+            console.error('Error deleting movie:', error);
+            return { error: error.message };
+        } finally{
+            set({isDeletingMovie: false});
         }
     }
 }));
